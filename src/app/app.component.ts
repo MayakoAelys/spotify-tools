@@ -12,28 +12,35 @@ import { SpotifyApiService } from './spotify-api.service';
 
 export class AppComponent {
   title = 'spotify-tools';
-  showLogin = true;
+  showLogin = false;
+  showApp = false;
+  userProfile = null;
 
   constructor(
     private httpClient: HttpClient,
     private spotifyApiService: SpotifyApiService) {
     
     console.log('[app.component.ts] constructor IN');
-    console.log('this.showLogin:', this.showLogin);
+    this.showLogin = false;
+    this.showApp = false;
 
     localforage.getItem(StorageKeys.SpotifyToken).then((dbValue) => {
-      if (!dbValue) {
+      if (!dbValue && !url.includes('/#access_token')) {
         console.log('No spotify token, showing app-login');
+        this.showLogin = true;
         return;
       }
 
       // Check if the token is still valid
       this.spotifyApiService.getUserProfile().then((userProfile) => {
         console.log('userProfile (then):', userProfile);
+        this.userProfile = userProfile;
         this.showLogin = false;
+        this.showApp = true;
       })
       .catch((error) => {
         console.error('getUserProfile catch error:', error);
+        this.showApp = false;
         this.showLogin = true;
       });
     });
@@ -62,12 +69,13 @@ export class AppComponent {
     // Save token in local storage
     localforage
       .setItem(StorageKeys.SpotifyToken, urlAccessToken)
-      .then(() => { console.log('new token saved' )});
+      .then((newToken) => {
+         console.log('new token saved', newToken);
+         console.log('redirecting');
 
-    console.log('redirecting');
+         document.location.href = '/';
 
-    document.location.href = '/';
-
-    console.log('[app.component.ts] constructor OUT');
+         console.log('[app.component.ts] constructor OUT');
+      });
   }
 }

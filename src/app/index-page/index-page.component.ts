@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageKeys } from 'src/constants/StorageKeys';
+import localforage from 'localforage';
 
 @Component({
   selector: 'app-index-page',
@@ -11,6 +13,12 @@ export class IndexPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  disconnectClick() {
+    localforage.removeItem(StorageKeys.SpotifyToken).then(() => {
+      document.location.href = '/';
+    });
   }
 
 }

@@ -18,9 +18,6 @@ export class SpotifyApiService {
 
     result = await this.httpClient
       .get('https://api.spotify.com/v1/me', httpOptions)
-      // .subscribe((apiResult) => {
-      //   console.log('apiResult: ', apiResult);
-      // })
       .toPromise();
 
     console.log('result value:', result);
