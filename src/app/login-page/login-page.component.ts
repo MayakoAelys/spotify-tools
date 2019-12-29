@@ -15,13 +15,13 @@ export class LoginPageComponent implements OnInit {
    }
 
   ngOnInit() {
-    // From Spotify?
-    const url = document.location.href;
-    console.log('location.origin: ', url);
+    // // From Spotify?
+    // const url = document.location.href;
+    // console.log('location.origin: ', url);
 
-    if (!url.includes('/#access_token')) { return; }
+    // if (!url.includes('/#access_token')) { return; }
 
-    console.log('from spotify!');
+    // console.log('from spotify!');
   }
 
   loginClick()
