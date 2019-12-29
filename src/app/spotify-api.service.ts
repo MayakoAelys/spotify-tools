@@ -40,7 +40,7 @@ export class SpotifyApiService {
   }
 
   private async getToken(): Promise<string> {
-    let result = '';
+    let result;
 
     console.log('getToken IN');
 

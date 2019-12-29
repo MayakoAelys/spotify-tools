@@ -28,7 +28,8 @@ export class LoginPageComponent implements OnInit {
   {
     const authURL = 'https://accounts.spotify.com/authorize';
     const clientID = 'f4a2ac99ea1b40a2a3d15cdcb6a455c6';
-    const redirectURI = 'http://localhost:4200';
+    //const redirectURI = 'http://localhost:4200';
+    const redirectURI = `${document.location.protocol}//${document.location.host}`;
     const scope = 'user-read-private&user-read-email';
     const responseType = 'token';
     // const state = '1337';
