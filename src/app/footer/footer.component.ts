@@ -1,3 +1,4 @@
+import { IconTypes } from './../../constants/IconTypes';
 import { Component, OnInit } from '@angular/core';
 
 @Component(
@@ -9,6 +10,9 @@ import { Component, OnInit } from '@angular/core';
 
 export class FooterComponent implements OnInit
 {
-  constructor() { }
+  iconURL: string;
+
+  constructor() { this.iconURL = IconTypes.Smile; }
+
   ngOnInit() { }
 }

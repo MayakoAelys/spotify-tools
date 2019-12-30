@@ -1,6 +1,8 @@
+import { IconTypes } from './../../constants/IconTypes';
 import { Component, OnInit, Input } from '@angular/core';
 import { StorageKeys } from 'src/constants/StorageKeys';
 import localforage from 'localforage';
+import { MenuCard } from 'src/models/MenuCard';
 
 @Component(
 {
@@ -12,6 +14,8 @@ import localforage from 'localforage';
 export class IndexPageComponent implements OnInit
 {
   username: string = 'username';
+  menuCards: Array<MenuCard> = new Array<MenuCard>();
+
   private _userProfile;
 
   @Input('userProfile')
@@ -20,9 +24,23 @@ export class IndexPageComponent implements OnInit
     console.warn('userProfile setter, userProfile:', userProfile);
     this._userProfile = userProfile;
     this.updateProfile();
-  };
+  }
 
-  constructor() { }
+  constructor()
+  {
+    // Set menu cards values
+    this.menuCards.push(
+    {
+      Icon: IconTypes.DeleteSweep,
+      Description: 'Remove duplicate songs from a playlist'
+    });
+
+    this.menuCards.push(
+      {
+        Icon: IconTypes.ImportPlaylist,
+        Description: 'Import a playlist to your playlists'
+      });
+  }
 
   ngOnInit() { this.updateProfile(); }
 

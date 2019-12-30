@@ -1,3 +1,4 @@
-export class StorageKeys {
+export class StorageKeys
+{
     public static SpotifyToken: string = 'SpotifyToken';
 }

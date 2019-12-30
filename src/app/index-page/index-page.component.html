@@ -1,7 +1,10 @@
 <div class="content">
     <h1>Hewwo {{ username }}</h1>
     <div class="menu-entries">
-        <app-menu-card></app-menu-card>
+        <app-menu-card
+            *ngFor="let menuCard of menuCards"
+            [imageSource]="menuCard.Icon"
+            [description]="menuCard.Description"></app-menu-card>
     </div>
     <a class="button" (click)="disconnectClick()">Disconnect</a>
 </div>

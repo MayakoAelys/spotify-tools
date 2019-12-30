@@ -1,14 +1,16 @@
 @import '../scss/const.scss';
 
 .content {
-    // display: flex;
-    // background-color: $green;
     text-align: center;
-    // height: 100%;
-    // width: 100%;
 }
 
 .menu-entries {
+    display: flex;
+
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+
     margin-top: 3rem;
     margin-bottom: 3rem;
 }

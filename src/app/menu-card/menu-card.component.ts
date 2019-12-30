@@ -16,7 +16,7 @@ export class MenuCardComponent implements OnInit
 
   ngOnInit()
   {
-    this.imageSource = '../assets/ic_delete_sweep.svg';
-    this.description = 'This is a menu entry.';
+    // this.imageSource = '../assets/ic_delete_sweep.svg';
+    // this.description = 'This is a menu entry.';
   }
 }
