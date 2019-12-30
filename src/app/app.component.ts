@@ -54,15 +54,7 @@ export class AppComponent
         switch (tokenStatus)
         {
           case TokenStatus.VALID:
-            // // Get user profile
-            // this.spotifyApiService
-            //   .getUserProfile()
-            //   .then((userProfile) =>
-            //   {
-            //     this.userProfile = userProfile;
-
             if (!route) { this.router.navigate([RoutesPath.Index.Path]); }
-              // });
             break;
 
           case TokenStatus.EMPTY:
