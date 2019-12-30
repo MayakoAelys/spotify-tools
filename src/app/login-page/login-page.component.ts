@@ -1,5 +1,7 @@
+import { TokenStatus } from './../../constants/TokenStatus';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SpotifyApiService } from '../spotify-api.service';
 
 @Component(
 {
@@ -12,13 +14,31 @@ export class LoginPageComponent implements OnInit
 {
   route: ActivatedRoute;
 
-  constructor(route: ActivatedRoute)
-  {
-    console.log('route:', route);
-    this.route = route;
-  }
+  constructor(private spotifyApiService: SpotifyApiService) { }
 
-  ngOnInit() { }
+  ngOnInit()
+  {
+    // // Check if we have a valid token
+    // // If this is the case, change the route to Index
+    // this.spotifyApiService
+    //   .getTokenStatus()
+    //   .then((tokenStatus: TokenStatus) =>
+    //   {
+    //     console.log('[login-page] tokenStatus:', tokenStatus);
+
+    //     switch (tokenStatus)
+    //     {
+    //       case TokenStatus.VALID:
+    //         break;
+
+    //       case TokenStatus.EMPTY:
+    //       case TokenStatus.EXPIRED:
+    //       default:
+    //         break;
+
+    //     }
+    //   });
+  }
 
   loginClick()
   {

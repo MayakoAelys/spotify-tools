@@ -1,8 +1,12 @@
+import { UserProfile } from './../../models/spotify/UserProfile';
+import { RoutesPath } from './../../constants/RoutesPath';
+import { SpotifyApiService } from './../spotify-api.service';
 import { IconTypes } from './../../constants/IconTypes';
 import { Component, OnInit, Input } from '@angular/core';
 import { StorageKeys } from 'src/constants/StorageKeys';
 import localforage from 'localforage';
 import { MenuCard } from 'src/models/MenuCard';
+import { Router } from '@angular/router';
 
 @Component(
 {
@@ -13,20 +17,24 @@ import { MenuCard } from 'src/models/MenuCard';
 
 export class IndexPageComponent implements OnInit
 {
-  username: string = 'username';
+  username: string = '';
+
   menuCards: Array<MenuCard> = new Array<MenuCard>();
 
-  private _userProfile;
+  private _userProfile: UserProfile;
 
   @Input('userProfile')
-  set userProfile(userProfile: any)
+  set userProfile(userProfile: UserProfile)
   {
     console.warn('userProfile setter, userProfile:', userProfile);
+
     this._userProfile = userProfile;
     this.updateProfile();
   }
 
-  constructor()
+  constructor(
+    private router: Router,
+    private spotifyApiService: SpotifyApiService)
   {
     // Set menu cards values
     this.menuCards.push(
@@ -42,7 +50,21 @@ export class IndexPageComponent implements OnInit
       });
   }
 
-  ngOnInit() { this.updateProfile(); }
+  ngOnInit()
+  {
+    // Get user profile
+    this.spotifyApiService
+      .getUserProfile()
+      .then((userProfile) =>
+      {
+        this.userProfile = userProfile;
+      })
+      .catch((err) =>
+      {
+        console.warn('Error when retrieving userProfile:', err);
+        this.router.navigate([RoutesPath.Root.Path]);
+      });
+  }
 
   // TODO - Factorize (see navbar.component.ts)
   updateProfile()
@@ -56,7 +78,7 @@ export class IndexPageComponent implements OnInit
     }
     else
     {
-      this.username = this._userProfile.display_name;
+      this.username = this._userProfile.DisplayName;
       console.warn('this.username: ', this.username);
     }
   }
@@ -64,9 +86,11 @@ export class IndexPageComponent implements OnInit
   disconnectClick()
   {
     localforage
-      .removeItem(StorageKeys.SpotifyToken)
+      //.removeItem(StorageKeys.SpotifyToken)
+      .clear()
       .then(() =>
       {
+
         document.location.href = '/';
       });
   }

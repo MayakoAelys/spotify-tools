@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { IndexPageComponent } from './index-page/index-page.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
+import { LoadingPageComponent } from './loading-page/loading-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MenuCardComponent } from './menu-card/menu-card.component';
     NavbarComponent,
     FooterComponent,
     IndexPageComponent,
-    MenuCardComponent
+    MenuCardComponent,
+    LoadingPageComponent
   ],
   imports: [
     BrowserModule,
