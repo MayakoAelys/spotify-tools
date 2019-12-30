@@ -54,7 +54,8 @@ export class SpotifyApiService
         if (value)
         {
           result = JSON.parse(value);
-          console.log('[spotify-api.service | getUserProfile] User profile found in storage:', result);
+
+          console.warn('[spotify-api.service | getUserProfile] User profile found in storage:', result);
 
           return;
         }
@@ -65,6 +66,8 @@ export class SpotifyApiService
     // Get a new profile object from Spotify
     let apiResult;
     const httpOptions = await this.getHttpOptions();
+
+    console.warn('[spotify-api.service | getUserProfile] getting a new user profile from Spotify');
 
     apiResult = await this.httpClient
       .get('https://api.spotify.com/v1/me', httpOptions)
@@ -77,12 +80,13 @@ export class SpotifyApiService
 
     // Save the new profile
     await localforage
-      .setItem(StorageKeys.UserProfile, JSON.stringify(profile))
-      .then(() =>
-      {
-        console.log('[spotify-api.service | getUserProfile] OUT');
-        return Promise.resolve(apiResult);
-      });
+      .setItem(StorageKeys.UserProfile, JSON.stringify(profile));
+      // .then(() =>{
+
+      // });
+
+    console.log('[spotify-api.service | getUserProfile] OUT, value', profile);
+    return Promise.resolve(profile);
   }
 
   private async getHttpOptions(): Promise<any>

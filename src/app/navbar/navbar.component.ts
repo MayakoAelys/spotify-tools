@@ -48,7 +48,8 @@ export class NavbarComponent implements OnInit
 
         if (!route || route === RoutesPath.Login.Path) { return; }
 
-        this.router.navigate([RoutesPath.Root.Path]);
+        // this.router.navigate([RoutesPath.Root.Path]);
+        document.location.href = '/';
       });
    }
 

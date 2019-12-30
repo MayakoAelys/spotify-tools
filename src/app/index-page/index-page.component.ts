@@ -62,7 +62,8 @@ export class IndexPageComponent implements OnInit
       .catch((err) =>
       {
         console.warn('Error when retrieving userProfile:', err);
-        this.router.navigate([RoutesPath.Root.Path]);
+        // this.router.navigate([RoutesPath.Root.Path]);
+        //document.location.href = '/';
       });
   }
 
