@@ -9,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class MenuCardComponent implements OnInit
 {
+  @Input() routerLink: string = '';
   @Input() imageSource: string;
   @Input() description: string;
 

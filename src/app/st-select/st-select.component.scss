@@ -1,0 +1,66 @@
+@import '../scss/const.scss';
+
+.st-select-container {
+    // vertical center align for the custom arrow
+    display: inline-flex;
+    align-items: center;
+
+    border-radius: 500px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: $green;
+}
+
+.st-select-arrow {
+    width: 0;
+    position: relative;
+    right: 2rem;
+
+    &::after {
+        content: "▼";
+    }
+}
+
+.st-select {
+    // Remove default browsers styles
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-color: $black;
+    color: $white;
+
+    border: 0;
+    padding: 1rem;
+    padding-right: 2rem; // for the custom arrow
+
+    // hide overflow with "..." (only works with firefox...)
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    width: 30rem;
+
+    // Avoid screen overflow
+    @media screen and (max-width: 600px){
+        width: 80vw;
+    }
+
+    &, & option {
+        font-family: $font;
+    }
+
+    // remove chrome blue rectangle
+    &:focus, &:active {
+        box-shadow: none;
+        outline: none !important;
+        border: 0;
+    }
+
+    // remove firefox android dotted selection rectangle
+    &:-moz-focusring, &::-moz-focus-inner, &::-moz-focus-outer {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+        border: 0;
+    }
+}

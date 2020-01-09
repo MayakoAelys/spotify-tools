@@ -1,3 +1,5 @@
+import { Playlist } from './../models/spotify/Playlist';
+import { SpotifyApiEndpoints } from './../constants/SpotifyApiEndpoints';
 import { StorageKeys } from './../constants/StorageKeys';
 import { UserProfile } from './../models/spotify/UserProfile';
 import { TokenStatus } from './../constants/TokenStatus';
@@ -70,7 +72,7 @@ export class SpotifyApiService
     console.warn('[spotify-api.service | getUserProfile] getting a new user profile from Spotify');
 
     apiResult = await this.httpClient
-      .get('https://api.spotify.com/v1/me', httpOptions)
+      .get(SpotifyApiEndpoints.CurrentUserProfile, httpOptions)
       .toPromise();
 
     console.log('[spotify-api.service | getUserProfile] Result value:', apiResult);
@@ -87,6 +89,35 @@ export class SpotifyApiService
 
     console.log('[spotify-api.service | getUserProfile] OUT, value', profile);
     return Promise.resolve(profile);
+  }
+
+  async getUserPlaylists(): Promise<Array<Playlist>>
+  {
+    console.log('[spotify-api.service | getUserPlaylists] IN');
+
+    let apiResult;
+    const httpOptions = await this.getHttpOptions();
+
+    apiResult = await this.httpClient
+      .get(SpotifyApiEndpoints.ListOfCurrentUserPlaylists, httpOptions)
+      .toPromise();
+
+    console.log('[spotify-api.service | getUserPlaylists] apiResult=', apiResult);
+
+    // Construct the result array
+    let result = new Array<Playlist>();
+
+    for (let i = 0; i < apiResult.items.length; i++)
+    {
+      let apiResultItem = apiResult.items[i];
+
+      result.push(new Playlist(apiResultItem));
+    }
+
+    console.log('Got', result.length, 'items. Values:', result);
+    console.log('[spotify-api.service | getUserPlaylists] OUT');
+
+    return Promise.resolve(result);
   }
 
   private async getHttpOptions(): Promise<any>

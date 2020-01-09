@@ -46,9 +46,31 @@ export class LoginPageComponent implements OnInit
     const clientID = 'f4a2ac99ea1b40a2a3d15cdcb6a455c6';
     // const redirectURI = 'http://localhost:4200';
     const redirectURI = `${document.location.protocol}//${document.location.host}`;
-    const scope = 'user-read-private&user-read-email';
+    const scopeList = [
+      // User
+      'user-read-email',
+      'user-read-private',
+
+      // Playlist
+      'playlist-read-collaborative',
+      'playlist-modify-public',
+      'playlist-read-private',
+      'playlist-modify-private'
+    ];
     const responseType = 'token';
     // const state = '1337';
+
+    // Construct scope string
+    let scope = '';
+
+    for (let i = 0; i < scopeList.length; i++)
+    {
+      let scopeItem = scopeList[i];
+
+      scope += scopeItem;
+
+      if (i < scopeList.length - 1) { scope += ' '; }
+    }
 
     const redirectURL = ''.concat(
       authURL,

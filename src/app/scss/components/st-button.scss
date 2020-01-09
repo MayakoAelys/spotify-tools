@@ -1,12 +1,17 @@
 @import '../const.scss';
 
-.button {
+.st-button {
+    border: 5px;
+    border-color: $green;
+    border-width: 5px;
+    border-style: solid;
+
     display: inline-block;
     cursor: default;
     background-color: $green;
-    padding: 1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 0.65rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     border-radius: 500px;
     transition: transform 0.1s;
 
@@ -17,7 +22,14 @@
 
     &:hover {
         background-color: $lightGreen;
+        border-color: $lightGreen;
 
         transform: scale(1.05);
+    }
+}
+
+.st-button-unselected {
+    &, &:hover, &:visited {
+        background-color: $black;
     }
 }

@@ -3,8 +3,9 @@
     <div class="menu-entries">
         <app-menu-card
             *ngFor="let menuCard of menuCards"
+            [routerLink]="menuCard.RouterLink"
             [imageSource]="menuCard.Icon"
             [description]="menuCard.Description"></app-menu-card>
     </div>
-    <a class="button" (click)="disconnectClick()">Disconnect</a>
+    <a class="st-button" (click)="disconnectClick()">Disconnect</a>
 </div>

@@ -39,12 +39,14 @@ export class IndexPageComponent implements OnInit
     // Set menu cards values
     this.menuCards.push(
     {
+      RouterLink: RoutesPath.RemoveDuplicate.Path,
       Icon: IconTypes.DeleteSweep,
       Description: 'Remove duplicate songs from a playlist'
     });
 
     this.menuCards.push(
       {
+        RouterLink: RoutesPath.ImportPlaylist.Path,
         Icon: IconTypes.ImportPlaylist,
         Description: 'Import a playlist to your playlists'
       });

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'app/scss/const.scss';
-@import 'app/scss/components/button.scss';
+@import 'app/scss/components/st-button.scss';
+@import 'app/scss/components/st-select.scss';
 
 body {
     background-color: $black;

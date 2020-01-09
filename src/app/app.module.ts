@@ -11,6 +11,10 @@ import { FooterComponent } from './footer/footer.component';
 import { IndexPageComponent } from './index-page/index-page.component';
 import { MenuCardComponent } from './menu-card/menu-card.component';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
+import { RemoveDuplicatePageComponent } from './remove-duplicate-page/remove-duplicate-page.component';
+import { ImportPlaylistPageComponent } from './import-playlist-page/import-playlist-page.component';
+import { StSelectComponent } from './st-select/st-select.component';
+import { TestPageComponent } from './test-page/test-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { LoadingPageComponent } from './loading-page/loading-page.component';
     FooterComponent,
     IndexPageComponent,
     MenuCardComponent,
-    LoadingPageComponent
+    LoadingPageComponent,
+    RemoveDuplicatePageComponent,
+    ImportPlaylistPageComponent,
+    StSelectComponent,
+    TestPageComponent
   ],
   imports: [
     BrowserModule,

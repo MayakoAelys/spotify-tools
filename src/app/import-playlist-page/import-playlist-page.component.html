@@ -1,0 +1,28 @@
+<div class="content">
+    <h1>Import playlist</h1>
+
+    <a class="st-button" (click)="showSavedPlaylists()">From saved lists</a>
+    <a class="st-button st-button-unselected" (click)="showURL()">From URL</a>
+
+    <div class="savedPlaylistContainer">
+        <p>Select a playlist to import below...</p>
+        <select class="st-select">
+            <option>From Spotify | Example playlist to play wi[...]</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+    </div>
+
+    <div class="urlContainer">
+        <p>Type the playlist URL below...</p>
+        <input type="text" />
+    </div>
+
+    <div class="playlistInfo">
+        <h2>Playlist title</h2>
+        <p><b>Owner:</b> Username</p>
+        <p><b>Songs count:</b> 42</p>
+        <p><b>Description:</b> This is a description.</p>
+        <a class="st-button" (click)="importPlaylist()">Import</a>
+    </div>
+</div>
