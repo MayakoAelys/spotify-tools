@@ -50,17 +50,22 @@
         font-family: $font;
     }
 
-    // remove chrome blue rectangle
+    // remove browsers focus (e.g. chrome has a blue rectangle)
     &:focus, &:active {
         box-shadow: none;
         outline: none !important;
         border: 0;
     }
 
-    // remove firefox android dotted selection rectangle
-    &:-moz-focusring, &::-moz-focus-inner, &::-moz-focus-outer {
+    // remove firefox and firefox android dotted selection rectangle
+    // the trick is to not render the text itself
+    // but to render its shadow with a setting that
+    // look like the actual text:
+    //     - same position of the text (0 0)
+    //     - no blur (0)
+    //     - color of the text: $white
+    &:-moz-focusring {
         color: transparent;
-        text-shadow: 0 0 0 #000;
-        border: 0;
+        text-shadow: 0 0 0 $white;
     }
 }
