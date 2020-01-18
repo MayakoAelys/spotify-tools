@@ -11,9 +11,9 @@ export class StSelectComponent implements OnInit {
 
   constructor()
   {
-    this.options.push({ key: 'Example value with many characters to show. The quick lazy brown wfox blablablabla', value: 'def' });
-    this.options.push({ key: 'abc', value: 'def' });
-    this.options.push({ key: 'abc', value: 'def' });
+    this.options.forEach(element => {
+      this.options.push({ key: element.key, value: element.value });
+    });
   }
 
   ngOnInit() {

@@ -1,0 +1,27 @@
+@import '../const.scss';
+@import '../includes/remove-browsers-focus.scss';
+
+.st-input-text {
+    // Remove default browsers styles
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-color: $black;
+    color: $white;
+    font-family: $font;
+
+    border: 3px solid $green;
+    border-radius: 500px;
+
+    padding: 1rem;
+
+    @include remove-browsers-focus;
+
+    width: 28rem;
+
+    // Avoid screen overflow
+    @media screen and (max-width: 600px){
+        width: 80vw;
+    }
+}
