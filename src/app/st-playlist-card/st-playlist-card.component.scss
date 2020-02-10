@@ -1,0 +1,43 @@
+@import '../scss/const.scss';
+
+.content {
+    // TODO: factorize style with mixin and st-select-component
+    display: inline-flex;
+    border-radius: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: $green;
+    align-items: flex-start;
+    background-color: grey;
+
+    width: 30rem;
+
+    padding: 2rem;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 3rem;
+    background-color: red;
+
+    .desc {
+        background-color: darkblue;
+    }
+
+    h1, p {
+        margin: 0;
+    }
+
+    h1 {
+        // white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+}
+
+img {
+    height: 125px;
+    width: 125px;
+}

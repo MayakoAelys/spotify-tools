@@ -16,6 +16,7 @@ import { ImportPlaylistPageComponent } from './import-playlist-page/import-playl
 import { StSelectComponent } from './st-select/st-select.component';
 import { TestPageComponent } from './test-page/test-page.component';
 import { FormsModule } from '@angular/forms';
+import { StPlaylistCardComponent } from './st-playlist-card/st-playlist-card.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     RemoveDuplicatePageComponent,
     ImportPlaylistPageComponent,
     StSelectComponent,
-    TestPageComponent
+    TestPageComponent,
+    StPlaylistCardComponent
   ],
   imports: [
     BrowserModule,

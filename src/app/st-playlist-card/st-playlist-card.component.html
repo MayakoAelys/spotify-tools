@@ -1,0 +1,16 @@
+<div>
+    <div class="content" *ngIf="values">
+        <img src="{{ values.CoverImageURL }}" alt="Playlist cover image"/>
+
+        <div class="infos">
+            <h1>{{ values.Title }}</h1>
+            <div class="desc">
+                <p><b>{{ values.SongsCount}}</b> song{{ values.SongsCount > 1 ? "s" : "" }}</p>
+                <p><b>From</b> {{ values.Owner }}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!values">
+        Can't render this Playlist card, missing values.
+    </div>
+</div>

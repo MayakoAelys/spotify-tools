@@ -17,8 +17,12 @@
         <input type="text" class="st-input-text" placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"/>
     </div>
 
-    <div class="playlistInfo" *ngIf="selectedPlaylist">
-        <h2>Playlist title: {{ selectedPlaylist.Title }}</h2>
+    <div *ngIf="selectedPlaylist">
+        <div class="playlistInfo">
+            <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
+        </div>
+
+        <!-- <h2>Playlist title: {{ selectedPlaylist.Title }}</h2>
         <p>
             <b>Cover image: </b>
             <span *ngIf="selectedPlaylist.CoverImageURL">
@@ -27,7 +31,7 @@
         </p>
         <p><b>Owner:</b> {{ selectedPlaylist.Owner }}</p>
         <p><b>Songs count:</b> {{ selectedPlaylist.SongsCount }}</p>
-        <p><b>Description:</b> {{ selectedPlaylist.Description }}</p>
+        <p><b>Description:</b> {{ selectedPlaylist.Description }}</p> -->
         <a class="st-button" (click)="importPlaylist()">Import</a>
     </div>
 </div>
