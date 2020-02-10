@@ -1,3 +1,4 @@
+// tslint:disable:no-string-literal
 export class Playlist
 {
     ID: string;

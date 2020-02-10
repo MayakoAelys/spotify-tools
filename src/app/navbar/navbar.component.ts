@@ -3,6 +3,7 @@ import { SpotifyApiService } from './../spotify-api.service';
 import { UserProfile } from './../../models/spotify/UserProfile';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenStatus } from './../../constants/TokenStatus';
 
 @Component(
 {
@@ -38,19 +39,29 @@ export class NavbarComponent implements OnInit
       .then((userProfile) =>
       {
         this.userProfile = userProfile;
+
+        // Try token
+        this.spotifyApiService
+          .getTokenStatus()
+          .then((tokenStatus: TokenStatus) => {
+            if (tokenStatus !== TokenStatus.VALID) { this.redirectToRoot(); }
+          });
       })
       .catch((err) =>
       {
         console.warn('Error when retrieving userProfile:', err);
-
-        // TODO - Factorize (see app.component.ts)
-        const route: string        = document.location.pathname.split('/')[1]; // e.g.: '', 'Index', 'Login', etc
-
-        if (!route || route === RoutesPath.Login.Path) { return; }
-
-        // this.router.navigate([RoutesPath.Root.Path]);
-        document.location.href = '/';
       });
+   }
+
+   redirectToRoot()
+   {
+      // TODO - Factorize (see app.component.ts)
+      const route: string        = document.location.pathname.split('/')[1]; // e.g.: '', 'Index', 'Login', etc
+
+      if (!route || route === RoutesPath.Login.Path) { return; }
+
+      // this.router.navigate([RoutesPath.Root.Path]);
+      document.location.href = '/';
    }
 
   updateProfile()

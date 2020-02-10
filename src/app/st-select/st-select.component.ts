@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, KeyValueDiffers } from '@angular/core';
+import { Component, OnInit, Input, KeyValueDiffers, Output } from '@angular/core';
 import { KeyValue } from '@angular/common';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-st-select',
@@ -8,15 +9,16 @@ import { KeyValue } from '@angular/common';
 })
 export class StSelectComponent implements OnInit {
   @Input() options: Array<KeyValue<string, string>> = new Array();
+  @Output() selectedValue: EventEmitter<any> =
+    new EventEmitter<any>();
 
-  constructor()
+  constructor() { }
+
+  ngOnInit() { }
+
+  onSelectChange(event: any)
   {
-    this.options.forEach(element => {
-      this.options.push({ key: element.key, value: element.value });
-    });
+    console.log('st-select | onSelectChange | event.target.value:', event.target.value);
+    this.selectedValue.emit(event.target.value);
   }
-
-  ngOnInit() {
-  }
-
 }

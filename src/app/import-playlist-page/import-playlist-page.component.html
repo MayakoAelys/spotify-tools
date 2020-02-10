@@ -1,29 +1,32 @@
 <div class="content">
     <h1>Import playlist</h1>
 
-    <a class="st-button" *ngClass="{ 'st-button-unselected': !fromSavedListActive }" (click)="showSavedPlaylists()">From saved lists</a>
-    <a class="st-button" *ngClass="{ 'st-button-unselected': !fromURLActive }" (click)="showURL()">From URL</a>
+    <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromSavedListActive }" (click)="showSavedPlaylists()">From saved lists</a>
+    <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromURLActive }" (click)="showURL()">From URL</a>
 
-    <div class="savedPlaylistContainer">
+    <div class="savedPlaylistContainer" *ngIf="fromSavedListActive">
+        <p>Selected value: {{ selectedPlaylist }}</p>
         <p>Select a playlist to import below...</p>
         <!-- <select class="st-select">
             <option>From Spotify | Example playlist to play wi[...]</option>
             <option>2</option>
             <option>3</option>
         </select> -->
-        <app-st-select [options]="selectPlaylists"></app-st-select>
+        <app-st-select
+            [options]="selectPlaylists"
+            (selectedValue)="selectedPlaylistChange($event)"></app-st-select>
     </div>
 
-    <div class="urlContainer">
+    <div class="urlContainer" *ngIf="fromURLActive">
         <p>Type the playlist URL below...</p>
         <input type="text" class="st-input-text" placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"/>
     </div>
 
-    <div class="playlistInfo">
+    <!-- <div class="playlistInfo">
         <h2>Playlist title</h2>
         <p><b>Owner:</b> Username</p>
         <p><b>Songs count:</b> 42</p>
         <p><b>Description:</b> This is a description.</p>
         <a class="st-button" (click)="importPlaylist()">Import</a>
-    </div>
+    </div> -->
 </div>

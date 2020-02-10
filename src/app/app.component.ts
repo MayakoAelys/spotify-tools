@@ -34,8 +34,8 @@ export class AppComponent
     const routePath: RoutePath = route ? RoutesPath[route] : RoutesPath.Root.Path;
 
     // TODO remove me
-    console.error('route:', route);
-    console.error('routePath:', routePath);
+    console.warn('route:', route);
+    console.warn('routePath:', routePath);
 
     if (document.location.hash.startsWith(RoutesPath.FromSpotify.Path))
     {

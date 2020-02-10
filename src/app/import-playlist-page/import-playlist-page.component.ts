@@ -9,6 +9,7 @@ import { UserProfile } from 'src/models/spotify/UserProfile';
   templateUrl: './import-playlist-page.component.html',
   styleUrls: ['./import-playlist-page.component.scss']
 })
+
 export class ImportPlaylistPageComponent implements OnInit
 {
   playlists: Array<Playlist> = new Array();
@@ -18,10 +19,9 @@ export class ImportPlaylistPageComponent implements OnInit
   fromSavedListActive: boolean = false;
   fromURLActive: boolean = false;
 
-  constructor(private spotifyApiService: SpotifyApiService)
-  {
-    
-  }
+  selectedPlaylist: Playlist = undefined;
+
+  constructor(private spotifyApiService: SpotifyApiService) { }
 
   ngOnInit()
   {
@@ -50,14 +50,42 @@ export class ImportPlaylistPageComponent implements OnInit
     console.log('ImportPlaylist | refreshSelectPlaylists] IN');
 
     this.selectPlaylists = new Array();
-    
-    this.playlists.forEach(element => {
+
+    // Add first empty value
+    this.selectPlaylists.push
+    ({
+      key: 'Select a playlist...',
+      value: null
+    });
+
+    this.playlists.forEach(element =>
+    {
       if (element.Owner === this.currentUser.DisplayName) { return; }
 
-      let keyValue = `From ${element.Owner} - ${element.Title}`;
-      this.selectPlaylists.push({ key: keyValue, value: element.ID });
+      const keyValue = `From ${element.Owner} - ${element.Title}`;
+      this.selectPlaylists.push({ key: keyValue, value: JSON.stringify(element) });
     });
 
     console.log('ImportPlaylist | refreshSelectPlaylists] OUT');
   }
+
+  showSavedPlaylists()
+  {
+    this.fromSavedListActive = true;
+    this.fromURLActive = false;
+  }
+
+  selectedPlaylistChange(event: Playlist)
+  {
+    console.log('ImportPlaylist - selectedPlaylistChange:', event);
+    this.selectedPlaylist = event;
+  }
+
+  showURL()
+  {
+    this.fromSavedListActive = false;
+    this.fromURLActive = true;
+  }
+
+  importPlaylist() {}
 }

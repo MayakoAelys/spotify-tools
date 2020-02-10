@@ -15,6 +15,7 @@ import { RemoveDuplicatePageComponent } from './remove-duplicate-page/remove-dup
 import { ImportPlaylistPageComponent } from './import-playlist-page/import-playlist-page.component';
 import { StSelectComponent } from './st-select/st-select.component';
 import { TestPageComponent } from './test-page/test-page.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TestPageComponent } from './test-page/test-page.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
