@@ -1,14 +1,19 @@
 @import '../scss/const.scss';
 
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 .content {
     // TODO: factorize style with mixin and st-select-component
-    display: inline-flex;
+    display: flex;
     border-radius: 20px;
     border-width: 3px;
     border-style: solid;
     border-color: $green;
     align-items: flex-start;
-    background-color: grey;
+    // background-color: grey;
 
     width: 30rem;
 
@@ -18,12 +23,16 @@
 .infos {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     align-items: flex-start;
     margin-left: 3rem;
-    background-color: red;
+    // background-color: red;
+    height: 100%;
 
     .desc {
-        background-color: darkblue;
+        // background-color: darkblue;
+        margin-top: auto;
+        text-align: left;
     }
 
     h1, p {
@@ -31,13 +40,17 @@
     }
 
     h1 {
+        // line-height: 1.4rem;
+        margin-top: -0.71rem;
+        font-size: 2rem;
+        overflow-wrap: break-word;
+        text-align: left;
         // white-space: nowrap;
         // overflow: hidden;
-        // text-overflow: ellipsis;
+        text-overflow: ellipsis;
     }
 }
 
 img {
-    height: 125px;
-    width: 125px;
+   width: 8rem;
 }
