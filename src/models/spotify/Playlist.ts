@@ -1,3 +1,4 @@
+import { SpotifyImageAPI } from './SpotifyImageAPI';
 // tslint:disable:no-string-literal
 export class Playlist
 {
@@ -9,6 +10,7 @@ export class Playlist
     Private: boolean;
     SongsCount: number;
     Owner: string;
+    CoverImageURL: string;
 
     constructor(apiItem?: string)
     {
@@ -22,5 +24,33 @@ export class Playlist
         this.Private = !apiItem['public'];
         this.SongsCount = apiItem['tracks']['total'];
         this.Owner = apiItem['owner']['display_name'];
+
+        // Try to get 300px cover image
+        // cf.: https://developer.spotify.com/documentation/general/guides/working-with-playlists/
+        let apiImages = apiItem['images'];
+
+        console.log('apiImages:', apiImages);
+
+        // TODO: Default playlist cover image?
+        if (!apiImages)
+            this.CoverImageURL = undefined;
+        else
+        {
+            apiImages.forEach(apiImage => {
+                let image = new SpotifyImageAPI(apiImage);
+
+                if (!this.CoverImageURL)
+                {
+                    this.CoverImageURL = image.URL;
+                    return;
+                }
+
+                if (image.Height == 300)
+                {
+                    this.CoverImageURL = image.URL;
+                    return;
+                }
+            });
+        }
     }
 }

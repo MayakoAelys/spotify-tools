@@ -55,7 +55,7 @@ export class ImportPlaylistPageComponent implements OnInit
     this.selectPlaylists.push
     ({
       key: 'Select a playlist...',
-      value: null
+      value: ''
     });
 
     this.playlists.forEach(element =>
@@ -69,23 +69,26 @@ export class ImportPlaylistPageComponent implements OnInit
     console.log('ImportPlaylist | refreshSelectPlaylists] OUT');
   }
 
-  showSavedPlaylists()
+  showSavedPlaylistsForm()
   {
     this.fromSavedListActive = true;
     this.fromURLActive = false;
+    this.selectedPlaylist = undefined;
   }
 
-  selectedPlaylistChange(event: Playlist)
-  {
-    console.log('ImportPlaylist - selectedPlaylistChange:', event);
-    this.selectedPlaylist = event;
-  }
-
-  showURL()
+  showURLForm()
   {
     this.fromSavedListActive = false;
     this.fromURLActive = true;
+    this.selectedPlaylist = undefined;
   }
+
+  selectedPlaylistChange(event: string)
+  {
+    console.log('ImportPlaylist - selectedPlaylistChange:', event);
+    this.selectedPlaylist = event ? JSON.parse(event) : undefined;
+  }
+
 
   importPlaylist() {}
 }
