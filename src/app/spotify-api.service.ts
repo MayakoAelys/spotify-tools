@@ -1,4 +1,5 @@
 import { Playlist } from './../models/spotify/Playlist';
+import { Track } from './../models/spotify/Track';
 import { SpotifyApiEndpoints } from './../constants/SpotifyApiEndpoints';
 import { StorageKeys } from './../constants/StorageKeys';
 import { UserProfile } from './../models/spotify/UserProfile';
@@ -107,11 +108,16 @@ export class SpotifyApiService
     // Construct the result array
     const result = new Array<Playlist>();
 
-    for (let i = 0; i < apiResult.items.length; i++)
-    {
-      const apiResultItem = apiResult.items[i];
+    // for (let i = 0; i < apiResult.items.length; i++)
+    // {
+    //   const apiResultItem = apiResult.items[i];
 
-      result.push(new Playlist(apiResultItem));
+    //   result.push(new Playlist(apiResultItem));
+    // }
+
+    for (const apiItem of apiResult.items)
+    {
+      result.push(new Playlist(apiItem));
     }
 
     console.log('Got', result.length, 'items. Values:', result);
@@ -149,6 +155,72 @@ export class SpotifyApiService
     console.log('[spotify-api.service | createNewPlaylist] OUT');
 
     return Promise.resolve(result);
+  }
+
+  async getPlaylistTracks(playlistID: string): Promise<Array<Track>>
+  {
+    console.log('[spotify-api.service | getPlaylistTracks] IN');
+
+    const httpOptions = await this.getHttpOptions();
+    const url = SpotifyApiEndpoints.GetPlaylistTracks.replace('{0}', playlistID);
+
+    const apiResult = await this.httpClient
+      .get(url, httpOptions)
+      .toPromise() as any;
+
+    const result = new Array<Track>();
+
+    if (!apiResult.items)
+    {
+      console.log('[spotify-api.service | getPlaylistTracks] No track retrieved, returning empty array.');
+      return Promise.resolve(result);
+    }
+
+    for (const apiItem of apiResult.items)
+    {
+      result.push(new Track(apiItem.track));
+    }
+
+    console.log(`[spotify-api.service | getPlaylistTracks] Got ${result.length} track(s):`, result);
+    console.log('[spotify-api.service | getPlaylistTracks] OUT');
+
+    return Promise.resolve(result);
+  }
+
+  async addTracksToPlaylist(
+    targetPlaylistID: string,
+    sourcePlaylist: Playlist)
+  {
+    console.log('[spotify-api.service | addTracksToPlaylist] IN');
+
+    const httpOptions = await this.getHttpOptions();
+    const url = SpotifyApiEndpoints.AddTracksToPlaylist.replace('{0}', targetPlaylistID);
+
+    // Get tracks from the source playlist
+    // TODO: Increase limit, ATM 100 tracks at most)
+    const playListTracks: Array<Track> =
+      await this.getPlaylistTracks(sourcePlaylist.ID);
+
+    // Build data wanted by the API
+    const tracksUri = [];
+
+    for (const track of playListTracks)
+    {
+      tracksUri.push(track.URI);
+    }
+
+    const data = { uris: tracksUri };
+    console.log('[spotify-api.service | addTracksToPlaylist] data:', data);
+
+    // Tell the API to add the tracks to our playlist
+    const apiResult = await this.httpClient
+      .post(url, data, httpOptions)
+      .toPromise();
+
+    console.log('[spotify-api.service | addTracksToPlaylist] apiResult=', apiResult);
+    console.log('[spotify-api.service | addTracksToPlaylist] OUT');
+
+    return Promise.resolve();
   }
 
   private async getHttpOptions(): Promise<any>

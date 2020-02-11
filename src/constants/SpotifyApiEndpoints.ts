@@ -11,9 +11,23 @@ export class SpotifyApiEndpoints
         SpotifyApiEndpoints.BaseURL + 'me';
 
     /**
+     * GET - https://developer.spotify.com/console/get-playlist-tracks/
+     * Replace: "{0}" with "playlist_id"
+     */
+    public static GetPlaylistTracks: string =
+        SpotifyApiEndpoints.BaseURL + 'playlists/{0}/tracks';
+
+    /**
      * POST - https://developer.spotify.com/console/post-playlists/
      * Replace: "{0}" with "user_id"
      */
     public static CreateNewPlaylist: string =
         SpotifyApiEndpoints.BaseURL + 'users/{0}/playlists';
+
+    /**
+     * POST - https://developer.spotify.com/console/post-playlist-tracks/
+     * Replace: "{0}" with "playlist_id"
+     */
+    public static AddTracksToPlaylist: string =
+        SpotifyApiEndpoints.BaseURL + 'playlists/{0}/tracks';
 }

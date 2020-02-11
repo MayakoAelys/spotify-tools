@@ -94,11 +94,22 @@ export class ImportPlaylistPageComponent implements OnInit
   {
     console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
 
+    // Create the playlist
     this.spotifyApiService
       .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
-      .then(result =>
+      .then(newPlaylist =>
       {
-        console.log('importPlaylist - call result:', result);
+        console.log('createNewPlaylist - call result:', newPlaylist);
+
+        // Add tracks to the playlist
+        this.spotifyApiService
+        .addTracksToPlaylist(newPlaylist.ID, this.selectedPlaylist)
+        .then(result =>
+        {
+          console.log('addTracksToPlaylist - call result:', result);
+        });
       });
+
+
   }
 }
