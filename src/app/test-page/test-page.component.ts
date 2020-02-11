@@ -19,6 +19,7 @@ export class TestPageComponent implements OnInit {
     this.options.push({ key: 'ghi', value: 'jkl' });
 
     this.playlistCardValues = new PlaylistCardValues();
+    // tslint:disable-next-line:max-line-length
     this.playlistCardValues.CoverImageURL = 'https://mosaic.scdn.co/300/02eb31e74f545426947ab82009133378a93a2ed7ab67616d0000b273304ae5169ad8e53e261b93f2ab67616d0000b2736fbf4bb780a9cbc34b3f35daab67616d0000b273d1241debb8543af8322a7d6a';
     this.playlistCardValues.Title = 'Playlist title';
     this.playlistCardValues.SongsCount = 1;

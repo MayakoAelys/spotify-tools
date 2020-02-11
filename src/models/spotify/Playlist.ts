@@ -12,7 +12,7 @@ export class Playlist
     Owner: string;
     CoverImageURL: string;
 
-    constructor(apiItem?: string)
+    constructor(apiItem?: any)
     {
         if (!apiItem) { return; }
 
@@ -27,17 +27,16 @@ export class Playlist
 
         // Try to get 300px cover image
         // cf.: https://developer.spotify.com/documentation/general/guides/working-with-playlists/
-        let apiImages = apiItem['images'];
+        const apiImages = apiItem['images'];
 
         console.log('apiImages:', apiImages);
 
         // TODO: Default playlist cover image?
-        if (!apiImages)
-            this.CoverImageURL = undefined;
+        if (!apiImages) { this.CoverImageURL = undefined; }
         else
         {
             apiImages.forEach(apiImage => {
-                let image = new SpotifyImageAPI(apiImage);
+                const image = new SpotifyImageAPI(apiImage);
 
                 if (!this.CoverImageURL)
                 {
@@ -45,7 +44,7 @@ export class Playlist
                     return;
                 }
 
-                if (image.Height == 300)
+                if (image.Height === 300)
                 {
                     this.CoverImageURL = image.URL;
                     return;

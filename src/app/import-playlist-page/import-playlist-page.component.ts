@@ -90,5 +90,15 @@ export class ImportPlaylistPageComponent implements OnInit
   }
 
 
-  importPlaylist() {}
+  importPlaylist()
+  {
+    console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
+
+    this.spotifyApiService
+      .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
+      .then(result =>
+      {
+        console.log('importPlaylist - call result:', result);
+      });
+  }
 }

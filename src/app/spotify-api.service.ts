@@ -77,7 +77,7 @@ export class SpotifyApiService
 
     console.log('[spotify-api.service | getUserProfile] Result value:', apiResult);
 
-    var profile = new UserProfile(apiResult);
+    const profile = new UserProfile(apiResult);
     console.log('profile test:', profile);
 
     // Save the new profile
@@ -105,17 +105,48 @@ export class SpotifyApiService
     console.log('[spotify-api.service | getUserPlaylists] apiResult=', apiResult);
 
     // Construct the result array
-    let result = new Array<Playlist>();
+    const result = new Array<Playlist>();
 
     for (let i = 0; i < apiResult.items.length; i++)
     {
-      let apiResultItem = apiResult.items[i];
+      const apiResultItem = apiResult.items[i];
 
       result.push(new Playlist(apiResultItem));
     }
 
     console.log('Got', result.length, 'items. Values:', result);
     console.log('[spotify-api.service | getUserPlaylists] OUT');
+
+    return Promise.resolve(result);
+  }
+
+  async createNewPlaylist(
+    playlistName: string,
+    playlistDescription: string,
+    playlistPublic: boolean): Promise<Playlist>
+  {
+    console.log('[spotify-api.service | createNewPlaylist] IN');
+
+    const userProfile = await this.getUserProfile();
+    const httpOptions = await this.getHttpOptions();
+    const url = SpotifyApiEndpoints.CreateNewPlaylist.replace('{0}', userProfile.ID);
+    const data =
+    {
+      name: playlistName,
+      description: playlistDescription,
+      public: playlistPublic
+    };
+
+    const apiResult = await this.httpClient
+      .post(url, data, httpOptions)
+      .toPromise();
+
+    console.log('[spotify-api.service | createNewPlaylist] apiResult=', apiResult);
+
+    const result = new Playlist(apiResult);
+
+    console.log('[spotify-api.service | createNewPlaylist] returning playlist:', result);
+    console.log('[spotify-api.service | createNewPlaylist] OUT');
 
     return Promise.resolve(result);
   }
