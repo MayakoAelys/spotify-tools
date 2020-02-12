@@ -23,7 +23,7 @@ export class IndexPageComponent implements OnInit
 
   private _userProfile: UserProfile;
 
-  @Input('userProfile')
+  // @Input('userProfile')
   set userProfile(userProfile: UserProfile)
   {
     console.warn('userProfile setter, userProfile:', userProfile);
@@ -90,11 +90,11 @@ export class IndexPageComponent implements OnInit
   disconnectClick()
   {
     localforage
-      //.removeItem(StorageKeys.SpotifyToken)
+      // .removeItem(StorageKeys.SpotifyToken)
       .clear()
       .then(() =>
       {
-
+        console.log('disconnectClick() redirect');
         document.location.href = '/';
       });
   }

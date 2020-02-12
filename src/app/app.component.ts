@@ -1,12 +1,12 @@
 import { RoutePath } from './../models/RoutePath';
 import { RoutesPath } from './../constants/RoutesPath';
 import { TokenStatus } from './../constants/TokenStatus';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import localforage from 'localforage';
 import { StorageKeys } from '../constants/StorageKeys';
 import { HttpClient } from '@angular/common/http';
 import { SpotifyApiService } from './spotify-api.service';
-import { Router } from '@angular/router';
+import { Router, RouterEvent, NavigationStart } from '@angular/router';
 
 @Component(
 {
@@ -15,19 +15,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent
+export class AppComponent implements OnInit
 {
   title = 'spotify-tools';
-  userProfile = null;
 
   constructor(
     private httpClient: HttpClient,
     private router: Router,
     private spotifyApiService: SpotifyApiService)
   {
-    console.log('[app-component | ngOnInit] current url:', document.location);
-    console.log('[app-component | ngOnInit] current pathname:', document.location.pathname);
-    console.log('[app-component | ngOnInit] current hash:', document.location.hash);
+    // console.log('[app-component | ngOnInit] current url:', document.location);
+    // console.log('[app-component | ngOnInit] current pathname:', document.location.pathname);
+    // console.log('[app-component | ngOnInit] current hash:', document.location.hash);
 
     // Extract route and get the routePath object
     const route: string        = document.location.pathname.split('/')[1]; // e.g.: '', 'Index', 'Login', etc
@@ -43,9 +42,11 @@ export class AppComponent
       return;
     }
 
-    // Check if we have a valid token
-    // If this is the case, change the route to Index
-    this.spotifyApiService
+    else
+    {
+      // Check if we have a valid token
+      // If this is the case, change the route to Index
+      this.spotifyApiService
       .getTokenStatus()
       .then((tokenStatus: TokenStatus) =>
       {
@@ -68,6 +69,43 @@ export class AppComponent
       // {
       //   this.showApp = true;
       // });
+    }
+  }
+
+  ngOnInit()
+  {
+    console.error('App.Component ngOnInit called');
+
+    // Handle route change events
+    this.router.events.subscribe(event =>
+      {
+        if (event instanceof NavigationStart)
+        {
+          console.warn('Router event:', event);
+          const routeName = event.url.split('/')[1];
+
+          if (!routeName ||
+              routeName === RoutesPath.Login.Path ||
+              routeName.startsWith(RoutesPath.FromSpotify.Path)) { return; }
+
+          // Check token
+          this.spotifyApiService
+            .getTokenStatus()
+            .then((tokenStatus: TokenStatus) => {
+              if (tokenStatus !== TokenStatus.VALID)
+              {
+                // Clear localstorage then redirect
+                localforage
+                .clear()
+                .then(() =>
+                {
+                  console.log('tokenStatus !== VALID > redirect to \'/\'');
+                  document.location.href = '/';
+                });
+              }
+            });
+        }
+      });
   }
 
   private handleSpotifyLogin(hash: string): void

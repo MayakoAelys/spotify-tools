@@ -29,7 +29,7 @@ export class Playlist
         // cf.: https://developer.spotify.com/documentation/general/guides/working-with-playlists/
         const apiImages = apiItem['images'];
 
-        console.log('apiImages:', apiImages);
+        // console.log('apiImages:', apiImages);
 
         // TODO: Default playlist cover image?
         if (!apiImages) { this.CoverImageURL = undefined; }

@@ -81,6 +81,7 @@ export class LoginPageComponent implements OnInit
       // '&state=', state;
     );
 
+    console.log('loginClick() redirect');
     document.location.href = redirectURL;
   }
 

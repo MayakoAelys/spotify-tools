@@ -18,13 +18,13 @@ export class SpotifyApiService
 
   async getTokenStatus(): Promise<TokenStatus>
   {
-    console.log('[spotify-api.service | getTokenStatus] IN');
+    // console.log('[spotify-api.service | getTokenStatus] IN');
 
     const token = await this.getToken();
 
     if (!token)
     {
-      console.log('[spotify-api.service | getTokenStatus] Token not found, returning', TokenStatus.EMPTY);
+      // console.log('[spotify-api.service | getTokenStatus] Token not found, returning', TokenStatus.EMPTY);
       return TokenStatus.EMPTY;
     }
 
@@ -32,12 +32,12 @@ export class SpotifyApiService
     const result = await this.getUserProfile()
       .then((userProfile) =>
       {
-        console.log('[spotify-api.service | getTokenStatus] Token found and valid, returning', TokenStatus.VALID);
+        // console.log('[spotify-api.service | getTokenStatus] Token found and valid, returning', TokenStatus.VALID);
         return TokenStatus.VALID;
       })
       .catch((error) =>
       {
-        console.log('[spotify-api.service | getTokenStatus] Token expired or other error, returning', TokenStatus.EXPIRED);
+        // console.log('[spotify-api.service | getTokenStatus] Token expired or other error, returning', TokenStatus.EXPIRED);
         return TokenStatus.EXPIRED;
       });
 
@@ -46,7 +46,7 @@ export class SpotifyApiService
 
   async getUserProfile(): Promise<UserProfile>
   {
-    console.log('[spotify-api.service | getUserProfile] IN');
+    // console.log('[spotify-api.service | getUserProfile] IN');
     let result: UserProfile;
 
     // Try to get the profile from the storage
@@ -58,7 +58,7 @@ export class SpotifyApiService
         {
           result = JSON.parse(value);
 
-          console.warn('[spotify-api.service | getUserProfile] User profile found in storage:', result);
+          // console.warn('[spotify-api.service | getUserProfile] User profile found in storage:', result);
 
           return;
         }
@@ -70,16 +70,16 @@ export class SpotifyApiService
     let apiResult;
     const httpOptions = await this.getHttpOptions();
 
-    console.warn('[spotify-api.service | getUserProfile] getting a new user profile from Spotify');
+    // console.warn('[spotify-api.service | getUserProfile] getting a new user profile from Spotify');
 
     apiResult = await this.httpClient
       .get(SpotifyApiEndpoints.CurrentUserProfile, httpOptions)
       .toPromise();
 
-    console.log('[spotify-api.service | getUserProfile] Result value:', apiResult);
+    // console.log('[spotify-api.service | getUserProfile] Result value:', apiResult);
 
     const profile = new UserProfile(apiResult);
-    console.log('profile test:', profile);
+    // console.log('profile test:', profile);
 
     // Save the new profile
     await localforage
@@ -88,13 +88,13 @@ export class SpotifyApiService
 
       // });
 
-    console.log('[spotify-api.service | getUserProfile] OUT, value', profile);
+    // console.log('[spotify-api.service | getUserProfile] OUT, value', profile);
     return Promise.resolve(profile);
   }
 
   async getUserPlaylists(): Promise<Array<Playlist>>
   {
-    console.log('[spotify-api.service | getUserPlaylists] IN');
+    // console.log('[spotify-api.service | getUserPlaylists] IN');
 
     let apiResult;
     const httpOptions = await this.getHttpOptions();
@@ -103,7 +103,7 @@ export class SpotifyApiService
       .get(SpotifyApiEndpoints.ListOfCurrentUserPlaylists, httpOptions)
       .toPromise();
 
-    console.log('[spotify-api.service | getUserPlaylists] apiResult=', apiResult);
+    // console.log('[spotify-api.service | getUserPlaylists] apiResult=', apiResult);
 
     // Construct the result array
     const result = new Array<Playlist>();
@@ -120,8 +120,8 @@ export class SpotifyApiService
       result.push(new Playlist(apiItem));
     }
 
-    console.log('Got', result.length, 'items. Values:', result);
-    console.log('[spotify-api.service | getUserPlaylists] OUT');
+    // console.log('Got', result.length, 'items. Values:', result);
+    // console.log('[spotify-api.service | getUserPlaylists] OUT');
 
     return Promise.resolve(result);
   }
@@ -131,7 +131,7 @@ export class SpotifyApiService
     playlistDescription: string,
     playlistPublic: boolean): Promise<Playlist>
   {
-    console.log('[spotify-api.service | createNewPlaylist] IN');
+    // console.log('[spotify-api.service | createNewPlaylist] IN');
 
     const userProfile = await this.getUserProfile();
     const httpOptions = await this.getHttpOptions();
@@ -147,19 +147,19 @@ export class SpotifyApiService
       .post(url, data, httpOptions)
       .toPromise();
 
-    console.log('[spotify-api.service | createNewPlaylist] apiResult=', apiResult);
+    // console.log('[spotify-api.service | createNewPlaylist] apiResult=', apiResult);
 
     const result = new Playlist(apiResult);
 
-    console.log('[spotify-api.service | createNewPlaylist] returning playlist:', result);
-    console.log('[spotify-api.service | createNewPlaylist] OUT');
+    // console.log('[spotify-api.service | createNewPlaylist] returning playlist:', result);
+    // console.log('[spotify-api.service | createNewPlaylist] OUT');
 
     return Promise.resolve(result);
   }
 
   async getPlaylistTracks(playlistID: string): Promise<Array<Track>>
   {
-    console.log('[spotify-api.service | getPlaylistTracks] IN');
+    // console.log('[spotify-api.service | getPlaylistTracks] IN');
 
     const httpOptions = await this.getHttpOptions();
     const url = SpotifyApiEndpoints.GetPlaylistTracks.replace('{0}', playlistID);
@@ -172,7 +172,7 @@ export class SpotifyApiService
 
     if (!apiResult.items)
     {
-      console.log('[spotify-api.service | getPlaylistTracks] No track retrieved, returning empty array.');
+      // console.log('[spotify-api.service | getPlaylistTracks] No track retrieved, returning empty array.');
       return Promise.resolve(result);
     }
 
@@ -181,8 +181,8 @@ export class SpotifyApiService
       result.push(new Track(apiItem.track));
     }
 
-    console.log(`[spotify-api.service | getPlaylistTracks] Got ${result.length} track(s):`, result);
-    console.log('[spotify-api.service | getPlaylistTracks] OUT');
+    // console.log(`[spotify-api.service | getPlaylistTracks] Got ${result.length} track(s):`, result);
+    // console.log('[spotify-api.service | getPlaylistTracks] OUT');
 
     return Promise.resolve(result);
   }
@@ -191,7 +191,7 @@ export class SpotifyApiService
     targetPlaylistID: string,
     sourcePlaylist: Playlist)
   {
-    console.log('[spotify-api.service | addTracksToPlaylist] IN');
+    // console.log('[spotify-api.service | addTracksToPlaylist] IN');
 
     const httpOptions = await this.getHttpOptions();
     const url = SpotifyApiEndpoints.AddTracksToPlaylist.replace('{0}', targetPlaylistID);
@@ -210,15 +210,15 @@ export class SpotifyApiService
     }
 
     const data = { uris: tracksUri };
-    console.log('[spotify-api.service | addTracksToPlaylist] data:', data);
+    // console.log('[spotify-api.service | addTracksToPlaylist] data:', data);
 
     // Tell the API to add the tracks to our playlist
     const apiResult = await this.httpClient
       .post(url, data, httpOptions)
       .toPromise();
 
-    console.log('[spotify-api.service | addTracksToPlaylist] apiResult=', apiResult);
-    console.log('[spotify-api.service | addTracksToPlaylist] OUT');
+    // console.log('[spotify-api.service | addTracksToPlaylist] apiResult=', apiResult);
+    // console.log('[spotify-api.service | addTracksToPlaylist] OUT');
 
     return Promise.resolve();
   }
@@ -227,7 +227,7 @@ export class SpotifyApiService
   {
     const token = await this.getToken();
 
-    console.log('token:', token);
+    // console.log('token:', token);
 
     return Promise.resolve(
     {
@@ -251,8 +251,8 @@ export class SpotifyApiService
       })
       .catch((err) =>
       {
-        console.warn('[spotify-api.service | getToken] LocalForage error:', err);
-        console.warn('    > Returning null');
+        // console.warn('[spotify-api.service | getToken] LocalForage error:', err);
+        // console.warn('    > Returning null');
         result = null;
       });
 
