@@ -18,6 +18,7 @@ import { Router, RouterEvent, NavigationStart } from '@angular/router';
 export class AppComponent implements OnInit
 {
   title = 'spotify-tools';
+  logoLink = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -86,7 +87,11 @@ export class AppComponent implements OnInit
 
           if (!routeName ||
               routeName === RoutesPath.Login.Path ||
-              routeName.startsWith(RoutesPath.FromSpotify.Path)) { return; }
+              routeName.startsWith(RoutesPath.FromSpotify.Path))
+          {
+            this.logoLink = [];
+            return;
+          }
 
           // Check token
           this.spotifyApiService
@@ -102,6 +107,10 @@ export class AppComponent implements OnInit
                   console.log('tokenStatus !== VALID > redirect to \'/\'');
                   document.location.href = '/';
                 });
+              }
+              else
+              {
+                this.logoLink = ['/Index'];
               }
             });
         }

@@ -18,6 +18,8 @@ export class NavbarComponent implements OnInit
   username: string;
   avatarURL: string;
 
+  @Input() logoLink;
+
   // @Input('userProfile')
   set userProfile(userProfile: UserProfile)
   {
