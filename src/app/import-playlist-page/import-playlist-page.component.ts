@@ -2,6 +2,7 @@ import { Playlist } from './../../models/spotify/Playlist';
 import { SpotifyApiService } from './../spotify-api.service';
 import { Component, OnInit } from '@angular/core';
 import { KeyValue } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 import { UserProfile } from 'src/models/spotify/UserProfile';
 
 @Component({
@@ -19,9 +20,15 @@ export class ImportPlaylistPageComponent implements OnInit
   fromSavedListActive: boolean = false;
   fromURLActive: boolean = false;
 
+  newPlaylist: Playlist;
+  importInProgress: boolean = false;
+  importDone: boolean = false;
+
   selectedPlaylist: Playlist = undefined;
 
-  constructor(private spotifyApiService: SpotifyApiService) { }
+  constructor(
+    private spotifyApiService: SpotifyApiService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit()
   {
@@ -84,6 +91,12 @@ export class ImportPlaylistPageComponent implements OnInit
     this.selectedPlaylist = undefined;
   }
 
+  // ref.: https://stackoverflow.com/a/37432961/2455658
+  sanitize(url: string)
+  {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
   selectedPlaylistChange(event: string)
   {
     // console.log('ImportPlaylist - selectedPlaylistChange:', event);
@@ -91,24 +104,35 @@ export class ImportPlaylistPageComponent implements OnInit
   }
 
 
-  importPlaylist()
+  async importPlaylist()
   {
     // console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
+    this.importInProgress = true;
 
     // Create the playlist
-    this.spotifyApiService
-      .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
-      .then(newPlaylist =>
-      {
-        // console.log('createNewPlaylist - call result:', newPlaylist);
+    this.newPlaylist =
+      await this.spotifyApiService.createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false);
 
-        // Add tracks to the playlist
-        this.spotifyApiService
-        .addTracksToPlaylist(newPlaylist.ID, this.selectedPlaylist)
-        .then(result =>
-        {
-          // console.log('addTracksToPlaylist - call result:', result);
-        });
-      });
+    // Add the tracks
+    await this.spotifyApiService.addTracksToPlaylist(this.newPlaylist.ID, this.selectedPlaylist);
+
+    // Show success message
+    this.importDone = true;
+
+    // Create the playlist
+    // this.spotifyApiService
+    //   .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
+    //   .then(newPlaylist =>
+    //   {
+    //     // console.log('createNewPlaylist - call result:', newPlaylist);
+
+    //     // Add tracks to the playlist
+    //     this.spotifyApiService
+    //     .addTracksToPlaylist(newPlaylist.ID, this.selectedPlaylist)
+    //     .then(result =>
+    //     {
+    //       // console.log('addTracksToPlaylist - call result:', result);
+    //     });
+    //   });
   }
 }

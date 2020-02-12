@@ -27,15 +27,34 @@ export class SpotifyApiService
     }
 
     // Token found, test it
-    const result = await this.getUserProfile()
-      .then((userProfile) =>
+    // Get a new profile object from Spotify
+    const httpOptions = await this.getHttpOptions();
+
+    // console.warn('[spotify-api.service | getUserProfile] getting a new user profile from Spotify');
+
+    const result = await this.httpClient
+      .get(SpotifyApiEndpoints.CurrentUserProfile, httpOptions)
+      .toPromise()
+      .then((apiResult) =>
       {
+        console.log('then, apiResult:', apiResult);
         return TokenStatus.VALID;
       })
-      .catch((error) =>
+      .catch((apiResult) =>
       {
+        console.log('then, apiResult:', apiResult);
         return TokenStatus.EXPIRED;
       });
+
+    // const result = await this.getUserProfile()
+    //   .then((userProfile) =>
+    //   {
+    //     return TokenStatus.VALID;
+    //   })
+    //   .catch((error) =>
+    //   {
+    //     return TokenStatus.EXPIRED;
+    //   });
 
     return result;
   }
@@ -127,9 +146,7 @@ export class SpotifyApiService
       .post(url, data, httpOptions)
       .toPromise();
 
-
     const result = new Playlist(apiResult);
-
 
     return Promise.resolve(result);
   }

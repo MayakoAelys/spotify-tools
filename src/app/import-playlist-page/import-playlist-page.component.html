@@ -1,26 +1,47 @@
 <div class="content">
     <h1>Import playlist</h1>
 
-    <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromSavedListActive }" (click)="showSavedPlaylistsForm()">From saved lists</a>
-    <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromURLActive }" (click)="showURLForm()">From URL</a>
+    <div *ngIf="!importInProgress">
+        <!-- Playlist import mode selection -->
+        <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromSavedListActive }" (click)="showSavedPlaylistsForm()">From saved lists</a>
+        <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromURLActive }" (click)="showURLForm()">From URL</a>
 
-    <div class="savedPlaylistContainer" *ngIf="fromSavedListActive">
-        <p>Select a playlist to import below...</p>
-        <app-st-select
-            [options]="selectPlaylists"
-            (selectedValue)="selectedPlaylistChange($event)"></app-st-select>
+        <!-- Playlist dropdown selection -->
+        <div class="savedPlaylistContainer" *ngIf="fromSavedListActive">
+            <p>Select a playlist to import below...</p>
+            <app-st-select
+                [options]="selectPlaylists"
+                (selectedValue)="selectedPlaylistChange($event)"></app-st-select>
+        </div>
+
+        <!-- Playlist URL selection -->
+        <div class="urlContainer" *ngIf="fromURLActive">
+            <p>Type the playlist URL below...</p>
+            <input type="text" class="st-input-text" placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"/>
+        </div>
+
+        <!-- Selected playlist (both components) -->
+        <div *ngIf="selectedPlaylist">
+            <div class="playlistInfo">
+                <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
+            </div>
+
+            <a class="st-button" (click)="importPlaylist()">Import</a>
+        </div>
     </div>
 
-    <div class="urlContainer" *ngIf="fromURLActive">
-        <p>Type the playlist URL below...</p>
-        <input type="text" class="st-input-text" placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"/>
-    </div>
+    <!-- Import in progress -->
+    <div *ngIf="importInProgress">
 
-    <div *ngIf="selectedPlaylist">
         <div class="playlistInfo">
             <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
         </div>
 
-        <a class="st-button" (click)="importPlaylist()">Import</a>
+        <h2 *ngIf="!importDone">Import in progress...</h2>
+
+        <div *ngIf="importDone">
+            <h2>Import finished!</h2>
+            <a class="st-button" [href]="sanitize(newPlaylist.URI)">Open playlist</a>
+        </div>
     </div>
 </div>
