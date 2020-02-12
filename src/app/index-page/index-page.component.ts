@@ -17,16 +17,15 @@ import { Router } from '@angular/router';
 
 export class IndexPageComponent implements OnInit
 {
-  username: string = '';
-
-  menuCards: Array<MenuCard> = new Array<MenuCard>();
-
   private _userProfile: UserProfile;
+
+  username: string = '';
+  menuCards: Array<MenuCard> = new Array<MenuCard>();
 
   // @Input('userProfile')
   set userProfile(userProfile: UserProfile)
   {
-    console.warn('userProfile setter, userProfile:', userProfile);
+    // console.warn('userProfile setter, userProfile:', userProfile);
 
     this._userProfile = userProfile;
     this.updateProfile();
@@ -64,17 +63,14 @@ export class IndexPageComponent implements OnInit
       .catch((err) =>
       {
         console.warn('Error when retrieving userProfile:', err);
-        // Redirecting on the navbar
-        // this.router.navigate([RoutesPath.Root.Path]);
-        // document.location.href = '/';
       });
   }
 
   // TODO - Factorize (see navbar.component.ts)
   updateProfile()
   {
-    console.warn('updateProfile called, userProfile: ', this._userProfile);
-    console.warn('this.username: ', this.username);
+    // console.warn('updateProfile called, userProfile: ', this._userProfile);
+    // console.warn('this.username: ', this.username);
 
     if (!this._userProfile)
     {
@@ -83,14 +79,13 @@ export class IndexPageComponent implements OnInit
     else
     {
       this.username = this._userProfile.DisplayName;
-      console.warn('this.username: ', this.username);
+      // console.warn('this.username: ', this.username);
     }
   }
 
   disconnectClick()
   {
     localforage
-      // .removeItem(StorageKeys.SpotifyToken)
       .clear()
       .then(() =>
       {

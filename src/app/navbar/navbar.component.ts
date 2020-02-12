@@ -41,13 +41,6 @@ export class NavbarComponent implements OnInit
       .then((userProfile) =>
       {
         this.userProfile = userProfile;
-
-        // // Try token
-        // this.spotifyApiService
-        //   .getTokenStatus()
-        //   .then((tokenStatus: TokenStatus) => {
-        //     if (tokenStatus !== TokenStatus.VALID) { this.redirectToRoot(); }
-        //   });
       })
       .catch((err) =>
       {
@@ -56,21 +49,8 @@ export class NavbarComponent implements OnInit
       });
    }
 
-  //  redirectToRoot()
-  //  {
-  //     // TODO - Factorize (see app.component.ts)
-  //     const route: string = document.location.pathname.split('/')[1]; // e.g.: '', 'Index', 'Login', etc
-
-  //     if (!route || route === RoutesPath.Login.Path) { return; }
-
-  //     // this.router.navigate([RoutesPath.Root.Path]);
-  //     document.location.href = '/';
-  //  }
-
   updateProfile()
   {
-    // console.warn('updateProfile called, userProfile: ', this._userProfile);
-
     // TODO - Factorize (see index-page.component.ts)
     if (!this._userProfile)
     {

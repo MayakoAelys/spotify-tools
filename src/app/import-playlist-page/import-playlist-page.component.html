@@ -5,7 +5,6 @@
     <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromURLActive }" (click)="showURLForm()">From URL</a>
 
     <div class="savedPlaylistContainer" *ngIf="fromSavedListActive">
-        <!-- <p>selectedPlaylist: {{ selectedPlaylist | json }}</p> -->
         <p>Select a playlist to import below...</p>
         <app-st-select
             [options]="selectPlaylists"
@@ -22,16 +21,6 @@
             <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
         </div>
 
-        <!-- <h2>Playlist title: {{ selectedPlaylist.Title }}</h2>
-        <p>
-            <b>Cover image: </b>
-            <span *ngIf="selectedPlaylist.CoverImageURL">
-                <img height="300" width="300" src="{{ selectedPlaylist.CoverImageURL }}" alt="Playlist cover image"/>
-            </span>
-        </p>
-        <p><b>Owner:</b> {{ selectedPlaylist.Owner }}</p>
-        <p><b>Songs count:</b> {{ selectedPlaylist.SongsCount }}</p>
-        <p><b>Description:</b> {{ selectedPlaylist.Description }}</p> -->
         <a class="st-button" (click)="importPlaylist()">Import</a>
     </div>
 </div>

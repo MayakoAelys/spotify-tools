@@ -9,7 +9,4 @@ export class RoutesPath
     public static readonly RemoveDuplicate: RoutePath = { Path: 'RemoveDuplicate', TokenRequired: true };
     public static readonly ImportPlaylist: RoutePath = { Path: 'ImportPlaylist', TokenRequired: true };
     public static readonly Test: RoutePath = { Path: 'banana42', TokenRequired: false };
-
-    // TODO Pages to create
-    public static readonly Authorize: RoutePath = { Path: 'Authorize', TokenRequired: true };
 }

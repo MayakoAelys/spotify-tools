@@ -8,15 +8,14 @@
 .content {
     // TODO: factorize style with mixin and st-select-component
     display: flex;
+    align-items: flex-start;
+
     border-radius: 20px;
     border-width: 3px;
     border-style: solid;
     border-color: $green;
-    align-items: flex-start;
-    // background-color: grey;
 
     width: 30rem;
-
     padding: 2rem;
 }
 
@@ -25,12 +24,11 @@
     flex-direction: column;
     flex-grow: 1;
     align-items: flex-start;
+
     margin-left: 3rem;
-    // background-color: red;
     height: 100%;
 
     .desc {
-        // background-color: darkblue;
         margin-top: auto;
         text-align: left;
     }
@@ -40,13 +38,10 @@
     }
 
     h1 {
-        // line-height: 1.4rem;
         margin-top: -0.71rem;
         font-size: 2rem;
         overflow-wrap: break-word;
         text-align: left;
-        // white-space: nowrap;
-        // overflow: hidden;
         text-overflow: ellipsis;
     }
 }

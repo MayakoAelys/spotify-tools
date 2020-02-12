@@ -25,7 +25,7 @@ export class ImportPlaylistPageComponent implements OnInit
 
   ngOnInit()
   {
-    console.log('ImportPlaylist | ngOnInit] IN');
+    // console.log('ImportPlaylist | ngOnInit] IN');
 
     this.spotifyApiService
       .getUserProfile()
@@ -42,12 +42,13 @@ export class ImportPlaylistPageComponent implements OnInit
               this.refreshSelectPlaylists();
             });
         });
-    console.log('ImportPlaylist | ngOnInit] OUT');
+
+      // console.log('ImportPlaylist | ngOnInit] OUT');
   }
 
   refreshSelectPlaylists()
   {
-    console.log('ImportPlaylist | refreshSelectPlaylists] IN');
+    // console.log('ImportPlaylist | refreshSelectPlaylists] IN');
 
     this.selectPlaylists = new Array();
 
@@ -66,7 +67,7 @@ export class ImportPlaylistPageComponent implements OnInit
       this.selectPlaylists.push({ key: keyValue, value: JSON.stringify(element) });
     });
 
-    console.log('ImportPlaylist | refreshSelectPlaylists] OUT');
+    // console.log('ImportPlaylist | refreshSelectPlaylists] OUT');
   }
 
   showSavedPlaylistsForm()
@@ -85,31 +86,29 @@ export class ImportPlaylistPageComponent implements OnInit
 
   selectedPlaylistChange(event: string)
   {
-    console.log('ImportPlaylist - selectedPlaylistChange:', event);
+    // console.log('ImportPlaylist - selectedPlaylistChange:', event);
     this.selectedPlaylist = event ? JSON.parse(event) : undefined;
   }
 
 
   importPlaylist()
   {
-    console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
+    // console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
 
     // Create the playlist
     this.spotifyApiService
       .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
       .then(newPlaylist =>
       {
-        console.log('createNewPlaylist - call result:', newPlaylist);
+        // console.log('createNewPlaylist - call result:', newPlaylist);
 
         // Add tracks to the playlist
         this.spotifyApiService
         .addTracksToPlaylist(newPlaylist.ID, this.selectedPlaylist)
         .then(result =>
         {
-          console.log('addTracksToPlaylist - call result:', result);
+          // console.log('addTracksToPlaylist - call result:', result);
         });
       });
-
-
   }
 }

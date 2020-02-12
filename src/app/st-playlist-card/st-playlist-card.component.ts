@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import PlaylistCardValues from 'src/models/PlaylistCardValues';
 import { Playlist } from 'src/models/spotify/Playlist';
 
 @Component({

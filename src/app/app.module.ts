@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainPageComponent } from './main-page/main-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -21,7 +20,6 @@ import { StPlaylistCardComponent } from './st-playlist-card/st-playlist-card.com
 @NgModule({
   declarations: [
     AppComponent,
-    MainPageComponent,
     LoginPageComponent,
     NavbarComponent,
     FooterComponent,
@@ -43,4 +41,5 @@ import { StPlaylistCardComponent } from './st-playlist-card/st-playlist-card.com
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

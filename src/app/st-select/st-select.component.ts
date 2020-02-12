@@ -18,7 +18,7 @@ export class StSelectComponent implements OnInit {
 
   onSelectChange(event: any)
   {
-    console.log('st-select | onSelectChange | event.target.value:', event.target.value);
+    // console.log('st-select | onSelectChange | event.target.value:', event.target.value);
     this.selectedValue.emit(event.target.value);
   }
 }
