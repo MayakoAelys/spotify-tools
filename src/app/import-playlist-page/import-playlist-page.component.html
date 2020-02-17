@@ -3,8 +3,17 @@
 
     <div *ngIf="!importInProgress">
         <!-- Playlist import mode selection -->
-        <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromSavedListActive }" (click)="showSavedPlaylistsForm()">From saved lists</a>
-        <a class="st-button" [ngClass]="{ 'st-button-unselected': !fromURLActive }" (click)="showURLForm()">From URL</a>
+        <a  class="st-button"
+            [ngClass]="{ 'st-button-unselected': !fromSavedListActive }"
+            (click)="showSavedPlaylistsForm()">
+            From saved lists
+        </a>
+
+        <a  class="st-button"
+            [ngClass]="{ 'st-button-unselected': !fromURLActive }"
+            (click)="showURLForm()">
+            From URL
+        </a>
 
         <!-- Playlist dropdown selection -->
         <div class="savedPlaylistContainer" *ngIf="fromSavedListActive">
@@ -15,9 +24,16 @@
         </div>
 
         <!-- Playlist URL selection -->
-        <div class="urlContainer" *ngIf="fromURLActive">
-            <p>Type the playlist URL below...</p>
-            <input type="text" class="st-input-text" placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"/>
+        <div *ngIf="fromURLActive">
+            <div class="urlContainer" *ngIf="fromURLActive">
+                <p>Type the playlist URL below...</p>
+                <input  type="text"
+                        class="st-input-text"
+                        placeholder="https://open.spotify.com/playlist/2SRY5DSGSX3ESDCD4sali8B"
+                        [(ngModel)]="playlistURL"
+                        (keyup)="onURLChange($event)"/>
+            </div>
+            <a class="st-button" (click)="getPlaylistByURL()">Get playlist</a>
         </div>
 
         <!-- Selected playlist (both components) -->

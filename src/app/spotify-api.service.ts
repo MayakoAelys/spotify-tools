@@ -126,6 +126,23 @@ export class SpotifyApiService
     return Promise.resolve(result);
   }
 
+  async getPlaylistByID(playlistID: string)
+  {
+    let apiResult;
+    let result: Playlist;
+    const httpOptions = await this.getHttpOptions();
+
+    apiResult = await this.httpClient
+      .get(
+        SpotifyApiEndpoints.GetPlaylistByID.replace('{0}', playlistID),
+        httpOptions)
+      .toPromise();
+
+    result = new Playlist(apiResult);
+
+    return Promise.resolve(result);
+  }
+
   async createNewPlaylist(
     playlistName: string,
     playlistDescription: string,

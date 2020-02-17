@@ -20,6 +20,7 @@ export class ImportPlaylistPageComponent implements OnInit
   fromSavedListActive: boolean = false;
   fromURLActive: boolean = false;
 
+  playlistURL: string;
   newPlaylist: Playlist;
   importInProgress: boolean = false;
   importDone: boolean = false;
@@ -103,7 +104,6 @@ export class ImportPlaylistPageComponent implements OnInit
     this.selectedPlaylist = event ? JSON.parse(event) : undefined;
   }
 
-
   async importPlaylist()
   {
     // console.log('importPlaylist - will create this playlist:', this.selectedPlaylist);
@@ -118,21 +118,35 @@ export class ImportPlaylistPageComponent implements OnInit
 
     // Show success message
     this.importDone = true;
+  }
 
-    // Create the playlist
-    // this.spotifyApiService
-    //   .createNewPlaylist(this.selectedPlaylist.Title, this.selectedPlaylist.Description, false)
-    //   .then(newPlaylist =>
-    //   {
-    //     // console.log('createNewPlaylist - call result:', newPlaylist);
+  onURLChange(event: KeyboardEvent)
+  {
+    if (event.key === 'Enter') { this.getPlaylistByURL(); }
+  }
 
-    //     // Add tracks to the playlist
-    //     this.spotifyApiService
-    //     .addTracksToPlaylist(newPlaylist.ID, this.selectedPlaylist)
-    //     .then(result =>
-    //     {
-    //       // console.log('addTracksToPlaylist - call result:', result);
-    //     });
-    //   });
+  async getPlaylistByURL()
+  {
+    // Get the playlist ID from the URL
+    // - NOT OK: Show error message
+    // - OK: Show the playlist
+    console.log('playlist url', this.playlistURL);
+
+    this.selectedPlaylist = undefined;
+
+    if (!this.playlistURL) { return; }
+
+    const urlSplit = this.playlistURL.split('open.spotify.com/playlist/');
+    const playlistID = urlSplit[1];
+
+    console.log('urlSplit:', urlSplit);
+    console.log('playlistID:', playlistID);
+
+    if (!playlistID) { return; } // TODO error message
+
+    console.log('getting playlist...');
+
+    this.selectedPlaylist =
+      await this.spotifyApiService.getPlaylistByID(playlistID);
   }
 }

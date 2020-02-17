@@ -30,4 +30,11 @@ export class SpotifyApiEndpoints
      */
     public static AddTracksToPlaylist: string =
         SpotifyApiEndpoints.BaseURL + 'playlists/{0}/tracks';
+
+    /**
+     *  GET - https://developer.spotify.com/console/get-playlist/
+     *  Replace: "{0}" with "playlist_id"
+     */
+    public static GetPlaylistByID: string =
+        SpotifyApiEndpoints.BaseURL + 'playlists/{0}';
 }
