@@ -1,10 +1,20 @@
-<p>remove-duplicate-page works!</p>
+<div class="content">
+    <h1>Remove duplicates songs</h1>
+    <p>Select one of your playlist below...</p>
 
-<h1>TODO</h1>
+    <app-st-select
+        [options]="selectPlaylists"
+        (selectedValue)="selectedPlaylistChange($event)"
+    ></app-st-select>
 
-<p>Playlists:</p>
-<ul>
-    <li *ngFor="let playlist of playlists">
-        {{ playlist.Title }} from {{ playlist.Owner }}
-    </li>
-</ul>
+    <!-- Selected playlist -->
+    <div *ngIf="selectedPlaylist">
+        <div class="playlistInfo">
+            <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
+        </div>
+
+        <a class="st-button" (click)="importPlaylist()">Import</a>
+    </div>
+
+    {{ debug }}
+</div>

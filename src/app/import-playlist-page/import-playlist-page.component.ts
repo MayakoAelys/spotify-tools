@@ -32,25 +32,31 @@ export class ImportPlaylistPageComponent implements OnInit
     private spotifyApiService: SpotifyApiService,
     private sanitizer: DomSanitizer) { }
 
-  ngOnInit()
+  async ngOnInit()
   {
     // console.log('ImportPlaylist | ngOnInit] IN');
 
-    this.spotifyApiService
-      .getUserProfile()
-      .then(
-        userProfile =>
-        {
-          this.currentUser = userProfile;
+    this.currentUser = await this.spotifyApiService.getUserProfile();  
+    this.playlists   = await this.spotifyApiService.getUserPlaylists();
 
-          this.spotifyApiService
-            .getUserPlaylists()
-            .then((playlists) =>
-            {
-              this.playlists = playlists;
-              this.refreshSelectPlaylists();
-            });
-        });
+    this.refreshSelectPlaylists();
+
+
+    // this.spotifyApiService
+    //   .getUserProfile()
+    //   .then(
+    //     userProfile =>
+    //     {
+    //       this.currentUser = userProfile;
+
+    //       this.spotifyApiService
+    //         .getUserPlaylists()
+    //         .then((playlists) =>
+    //         {
+    //           this.playlists = playlists;
+    //           this.refreshSelectPlaylists();
+    //         });
+    //     });
 
       // console.log('ImportPlaylist | ngOnInit] OUT');
   }
