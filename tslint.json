@@ -92,7 +92,8 @@
     "object-literal-key-quotes": [
       true,
       "consistent-as-needed"
-    ]
+    ],
+    "curly": false
   },
   "rulesDirectory": [
     "codelyzer"

@@ -36,6 +36,20 @@
             <a class="st-button" (click)="getPlaylistByURL()">Get playlist</a>
         </div>
 
+        <!-- Error message (URL Import) -->
+        <div class="errorMessage" *ngIf="importErrorMessage">
+            <h1>Error</h1>
+            <h2>{{ importErrorMessage }}</h2>
+            <div class="infos">
+                <p>Please check if...</p>
+                <ul>
+                    <li>the link target a playlist</li>
+                    <li>the link is correct</li>
+                    <li>the playlist is public</li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Selected playlist (both components) -->
         <div *ngIf="selectedPlaylist">
             <div class="playlistInfo">

@@ -25,6 +25,7 @@ export class ImportPlaylistPageComponent implements OnInit
   importInProgress: boolean = false;
   importDone: boolean = false;
 
+  importErrorMessage: string;
   selectedPlaylist: Playlist = undefined;
 
   constructor(
@@ -132,9 +133,14 @@ export class ImportPlaylistPageComponent implements OnInit
     // - OK: Show the playlist
     console.log('playlist url', this.playlistURL);
 
-    this.selectedPlaylist = undefined;
+    this.selectedPlaylist   = undefined;
+    this.importErrorMessage = undefined;
 
-    if (!this.playlistURL) { return; }
+    if (!this.playlistURL)
+    {
+      this.importErrorMessage = 'No URL was given';
+      return;
+    }
 
     const urlSplit = this.playlistURL.split('open.spotify.com/playlist/');
     const playlistID = urlSplit[1];
@@ -142,11 +148,27 @@ export class ImportPlaylistPageComponent implements OnInit
     console.log('urlSplit:', urlSplit);
     console.log('playlistID:', playlistID);
 
-    if (!playlistID) { return; } // TODO error message
+    if (!playlistID)
+    {
+      this.importErrorMessage = `Couldn't get the playlist ID from the URL`;
+      return;
+    }
 
     console.log('getting playlist...');
 
-    this.selectedPlaylist =
-      await this.spotifyApiService.getPlaylistByID(playlistID);
+    try
+    {
+      this.selectedPlaylist =
+        await this.spotifyApiService.getPlaylistByID(playlistID);
+    }
+    catch (error)
+    {
+      console.log('Error while importing the playlist:', error);
+
+      if (error.status === 404)
+        this.importErrorMessage = `Playlist not found.`;
+      else
+        this.importErrorMessage = `The playlist could not be imported.`;
+    }
   }
 }

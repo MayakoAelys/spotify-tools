@@ -122,7 +122,6 @@ export class SpotifyApiService
       result.push(new Playlist(apiItem));
     }
 
-
     return Promise.resolve(result);
   }
 
