@@ -1,3 +1,4 @@
+import { TrackToRemove } from './../../models/TrackToRemove';
 import { Playlist } from './../../models/spotify/Playlist';
 import { SpotifyApiService } from './../spotify-api.service';
 import { Component, OnInit } from '@angular/core';
@@ -63,22 +64,24 @@ export class RemoveDuplicatePageComponent implements OnInit
 
   //#region Events
 
-  async selectedPlaylistChange(event: string)
+  async selectedPlaylistChange(event: any)
   {
+    console.log('selectedPlaylistChange event:', event);
+
     this.selectedPlaylist = event ? JSON.parse(event) : undefined;
 
     if (!this.selectedPlaylist)
       return;
 
     // Get songs to detect duplicates
-    let tracks = await this.spotifyApiService.getPlaylistTracks(this.selectedPlaylist.ID);
-    let uniqueTracks: Track[] = [];
-    let dupeTracks: Track[] = []; // temp
+    const tracks = await this.spotifyApiService.getPlaylistTracks(this.selectedPlaylist.ID);
+    const uniqueTracks: Track[] = [];
+    const dupeTracks:   Track[] = [];
 
     for (const elem of tracks)
     {
       const alreadyExists = uniqueTracks.filter(t => t.ID === elem.ID).length !== 0;
-  
+
       if (alreadyExists)
         dupeTracks.push(elem);
       else
@@ -86,6 +89,55 @@ export class RemoveDuplicatePageComponent implements OnInit
     }
 
     console.log(tracks, uniqueTracks, dupeTracks);
+  }
+
+  async removeDuplicates(event: any)
+  {
+    console.log('removeDuplicates event:', event);
+
+    const playlistTracks = await this.spotifyApiService.getPlaylistTracks(this.selectedPlaylist.ID);
+    let uniqueTracks: Track[] = [];
+    let tracksToRemove: TrackToRemove[] = [];
+
+    for (let i = 0; i < playlistTracks.length; i++)
+    {
+      const track = playlistTracks[i];
+      const alreadyExists = uniqueTracks.filter(t => t.ID === track.ID).length !== 0;
+
+      console.log('Track ID:', track.ID);
+      console.log('    - alreadyExists:', alreadyExists);
+
+      if (!alreadyExists)
+      {
+        uniqueTracks.push(track);
+        continue;
+      }
+
+      // Already exist, need to remove it
+      const trackToRemove = tracksToRemove.filter(t => t.ID === track.ID);
+      console.log('    - trackToRemove:', trackToRemove);
+      console.log('    - tracksToRemove before update:', tracksToRemove);
+
+      if (trackToRemove.length === 0)
+      {
+        const newTrackToRemove = new TrackToRemove(track.ID, track.URI, [i]);
+        console.log('    - newTrackToRemove:', newTrackToRemove);
+
+        tracksToRemove.push(newTrackToRemove);
+      }
+      else
+      {
+        const removeIndex = tracksToRemove.findIndex(t => t.ID === track.ID);
+        console.log('    - removeIndex:', removeIndex, '| trackToRemove:', tracksToRemove[removeIndex]);
+
+        tracksToRemove[removeIndex].Positions.push(i);
+        console.log('    - trackTeRemove updated:', tracksToRemove[removeIndex]);
+      }
+
+      console.log('    - tracksToRemove after update:', tracksToRemove);
+    }
+
+    // Request to delete selected tracks
   }
 
   //#endregion
