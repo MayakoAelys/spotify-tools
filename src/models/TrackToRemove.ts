@@ -14,4 +14,12 @@ export class TrackToRemove
         else
             this.Positions = positions;
     }
+
+    public toSpotifyJSON(): object
+    {
+        return {
+            uri: this.URI,
+            positions: this.Positions
+        };
+    }
 }

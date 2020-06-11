@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { TrackToRemove } from './../../models/TrackToRemove';
 import { Playlist } from './../../models/spotify/Playlist';
 import { SpotifyApiService } from './../spotify-api.service';
@@ -20,9 +21,19 @@ export class RemoveDuplicatePageComponent implements OnInit
   selectedPlaylist: Playlist;
   selectPlaylists: Array<KeyValue<string, string>> = new Array();
 
-  debug: string;
+  deleteInProgress: boolean = false;
+  deleteDone: boolean       = false;
+  tracksCount: number       = 0;
 
-  constructor(private spotifyApiService: SpotifyApiService) { }
+  constructor(
+  private spotifyApiService: SpotifyApiService,
+  private sanitizer: DomSanitizer) { }
+
+  // ref.: https://stackoverflow.com/a/37432961/2455658
+  public sanitize(url: string)
+  {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
 
   async ngOnInit()
   {
@@ -69,6 +80,8 @@ export class RemoveDuplicatePageComponent implements OnInit
     console.log('selectedPlaylistChange event:', event);
 
     this.selectedPlaylist = event ? JSON.parse(event) : undefined;
+    this.deleteDone = false;
+    this.deleteInProgress = false;
 
     if (!this.selectedPlaylist)
       return;
@@ -138,6 +151,13 @@ export class RemoveDuplicatePageComponent implements OnInit
     }
 
     // Request to delete selected tracks
+    this.deleteInProgress = true;
+    this.tracksCount = tracksToRemove.length;
+    await this.spotifyApiService.removeTracksFromPlaylist(this.selectedPlaylist, tracksToRemove);
+
+    this.deleteDone = true;
+    this.refreshSelectPlaylists();
+    console.log('Tracks removed.');
   }
 
   //#endregion

@@ -8,13 +8,26 @@
     ></app-st-select>
 
     <!-- Selected playlist -->
-    <div *ngIf="selectedPlaylist">
+    <div *ngIf="selectedPlaylist && !deleteInProgress">
         <div class="playlistInfo">
             <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
         </div>
 
-        <a class="st-button" (click)="removeDuplicates()">Import</a>
+        <a class="st-button" (click)="removeDuplicates()">Validate</a>
     </div>
 
-    {{ debug }}
+    <!-- Delete in progress -->
+    <div *ngIf="deleteInProgress">
+        <div class="playlistInfo">
+            <app-st-playlist-card [values]="selectedPlaylist"></app-st-playlist-card>
+        </div>
+
+        <h2 *ngIf="!deleteDone">Delete in progress...</h2>
+
+        <div *ngIf="deleteDone">
+            <h1>Delete done!</h1>
+            <h2>Removed {{ tracksCount }} track(s).</h2>
+            <a class="st-button" [href]="sanitize(selectedPlaylist.URI)">Open playlist</a>
+        </div>
+    </div>
 </div>

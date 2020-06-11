@@ -37,4 +37,11 @@ export class SpotifyApiEndpoints
      */
     public static GetPlaylistByID: string =
         SpotifyApiEndpoints.BaseURL + 'playlists/{0}';
+
+    /**
+     * DELETE - https://developer.spotify.com/console/delete-playlist-tracks/
+     * Replace: "{0}" with "playlist_id"
+     */
+    public static RemoveTracksFromPlaylist: string =
+        SpotifyApiEndpoints.BaseURL + 'playlists/{0}/tracks';
 }

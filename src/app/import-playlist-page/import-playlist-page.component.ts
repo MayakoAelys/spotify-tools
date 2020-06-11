@@ -36,7 +36,7 @@ export class ImportPlaylistPageComponent implements OnInit
   {
     // console.log('ImportPlaylist | ngOnInit] IN');
 
-    this.currentUser = await this.spotifyApiService.getUserProfile();  
+    this.currentUser = await this.spotifyApiService.getUserProfile();
     this.playlists   = await this.spotifyApiService.getUserPlaylists();
 
     this.refreshSelectPlaylists();

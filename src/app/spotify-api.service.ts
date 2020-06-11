@@ -1,3 +1,4 @@
+import { TrackToRemove } from './../models/TrackToRemove';
 import { Playlist } from './../models/spotify/Playlist';
 import { Track } from './../models/spotify/Track';
 import { SpotifyApiEndpoints } from './../constants/SpotifyApiEndpoints';
@@ -223,6 +224,29 @@ export class SpotifyApiService
 
 
     return Promise.resolve();
+  }
+
+  public async removeTracksFromPlaylist(
+    targetPlaylist: Playlist,
+    tracksToRemove: TrackToRemove[]
+  ): Promise<void>
+  {
+    const httpOptions = await this.getHttpOptions();
+    const url = SpotifyApiEndpoints.RemoveTracksFromPlaylist.replace('{0}', targetPlaylist.ID);
+
+    // Build request
+    const data = { tracks: [] };
+
+    for (const track of tracksToRemove)
+    {
+      data.tracks.push(track.toSpotifyJSON());
+    }
+
+    httpOptions.body = data; // add body to headers manually (not handled with Angular)
+
+    const apiResult = await this.httpClient
+      .delete(url, httpOptions)
+      .toPromise();
   }
 
   private async getHttpOptions(): Promise<any>
