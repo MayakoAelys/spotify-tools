@@ -33,9 +33,9 @@ export class AppComponent implements OnInit
     const route: string        = document.location.pathname.split('/')[1]; // e.g.: '', 'Index', 'Login', etc
     const routePath: RoutePath = route ? RoutesPath[route] : RoutesPath.Root.Path;
 
-    // TODO remove me
-    console.warn('route:', route);
-    console.warn('routePath:', routePath);
+    // // TODO remove me
+    // console.warn('route:', route);
+    // console.warn('routePath:', routePath);
 
     if (document.location.hash.startsWith(RoutesPath.FromSpotify.Path))
     {
@@ -62,14 +62,14 @@ export class AppComponent implements OnInit
           case TokenStatus.EMPTY:
           case TokenStatus.EXPIRED:
           default:
-            if (routePath.TokenRequired || !route) { this.router.navigate([RoutesPath.Login.Path]); }
+            localforage
+              .clear()
+              .then(() => {
+                if (routePath.TokenRequired || !route) { this.router.navigate([RoutesPath.Login.Path]); }
+              });
             break;
         }
       });
-      // .finally(() =>
-      // {
-      //   this.showApp = true;
-      // });
     }
   }
 
