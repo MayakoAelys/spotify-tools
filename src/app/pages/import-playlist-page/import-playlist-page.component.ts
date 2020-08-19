@@ -1,5 +1,5 @@
-import { Playlist } from './../../models/spotify/Playlist';
-import { SpotifyApiService } from './../spotify-api.service';
+import { Playlist } from './../../../models/spotify/Playlist';
+import { SpotifyApiService } from './../../spotify-api.service';
 import { Component, OnInit } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';

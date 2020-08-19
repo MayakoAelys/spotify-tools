@@ -1,4 +1,4 @@
-import { IconTypes } from './../../constants/IconTypes';
+import { IconTypes } from './../../../constants/IconTypes';
 import { Component, OnInit } from '@angular/core';
 
 @Component(

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SpotifyApiService } from '../spotify-api.service';
+import { SpotifyApiService } from '../../spotify-api.service';
 
 @Component(
 {

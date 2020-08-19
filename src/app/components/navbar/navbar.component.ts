@@ -1,9 +1,9 @@
-import { RoutesPath } from './../../constants/RoutesPath';
-import { SpotifyApiService } from './../spotify-api.service';
-import { UserProfile } from './../../models/spotify/UserProfile';
+import { RoutesPath } from './../../../constants/RoutesPath';
+import { SpotifyApiService } from './../../spotify-api.service';
+import { UserProfile } from './../../../models/spotify/UserProfile';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenStatus } from './../../constants/TokenStatus';
+import { TokenStatus } from './../../../constants/TokenStatus';
 
 @Component(
 {

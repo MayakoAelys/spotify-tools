@@ -1,7 +1,7 @@
-import { UserProfile } from './../../models/spotify/UserProfile';
-import { RoutesPath } from './../../constants/RoutesPath';
-import { SpotifyApiService } from './../spotify-api.service';
-import { IconTypes } from './../../constants/IconTypes';
+import { UserProfile } from './../../../models/spotify/UserProfile';
+import { RoutesPath } from './../../../constants/RoutesPath';
+import { SpotifyApiService } from './../../spotify-api.service';
+import { IconTypes } from './../../../constants/IconTypes';
 import { Component, OnInit, Input } from '@angular/core';
 import { StorageKeys } from 'src/constants/StorageKeys';
 import localforage from 'localforage';

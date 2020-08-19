@@ -1,7 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { TrackToRemove } from './../../models/TrackToRemove';
-import { Playlist } from './../../models/spotify/Playlist';
-import { SpotifyApiService } from './../spotify-api.service';
+import { TrackToRemove } from './../../../models/TrackToRemove';
+import { Playlist } from './../../../models/spotify/Playlist';
+import { SpotifyApiService } from './../../spotify-api.service';
 import { Component, OnInit } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { UserProfile } from 'src/models/spotify/UserProfile';
